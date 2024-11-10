@@ -1,0 +1,55 @@
+<div [ngClass]="['min-h-screen', 'relative z-0 overflow-hidden']">
+  <ui-content-wrapper class="relative z-0">
+
+
+      <h1>DynamicJsonForm</h1>
+      <p>{{ i18nContent$.value.INTRODUCTION.BRIEF }}</p>
+
+      <button
+        type="button"
+        [ngClass]="[
+          'min-w-56',
+          'py-3 px-8 mt-12 bg-[var(--primary-500)] rounded-full',
+          'text-white md:text-lg',
+          'duration-500 transition-transform',
+          'hover:-translate-y-1 hover:drop-shadow-lg'
+        ]"
+        [routerLink]="'/docs'"
+      >
+        {{ i18nContent$.value.GET_STARTED }}
+      </button>
+    </div>
+
+    <div
+      class="absolute -z-10 left-3/4 top-[50vh] lg:top-[35vh] -translate-x-1/2"
+    >
+      <div class="illustration">
+        <div style="--index: 0; height: 100%"></div>
+        <div style="--index: 1; height: 50%; top: 35%; left: -40%"></div>
+        <div style="--index: 6; top: 30%; left: 24%; width: 30%"></div>
+        <div style="--index: 5; top: 27%; left: -50%; width: 60%"></div>
+        <div style="--index: 3; top: 58%; left: -65%"></div>
+        <div style="--index: 4; top: 6%; left: 10%"></div>
+      </div>
+    </div>
+
+    <ng-container *ngIf="features$ | async as features">
+      <ui-content-wrapper>
+        <div class="grid lg:grid-cols-2 gap-6 mb-8 px-8 lg:px-12">
+          <ul class="features mt-8 lg:mt-24 lg:text-lg">
+            <li>{{ features.NESTED_LEVELS }}</li>
+            <li>{{ features.CONDITIONS }}</li>
+            <li>{{ features.VALIDATORS }}</li>
+            <li>{{ features.CUSTOM_COMPONENTS }}</li>
+            <li>{{ features.LAYOUT }}</li>
+            <li>{{ features.UI_LIBRARY }}</li>
+          </ul>
+
+          <app-doc-form-viewer
+            [configPath]="'HOME_DEMO.' + (lang$ | async)?.toUpperCase()"
+          ></app-doc-form-viewer>
+        </div>
+      </ui-content-wrapper>
+    </ng-container>
+  </ui-content-wrapper>
+</div>

@@ -1,0 +1,190 @@
+<!-- desktop -->
+<ng-container *ngIf="!isMobile">
+  <div class="flex flex-col h-full overflow-auto beauty-scrollbar">
+    <ng-container
+      *ngFor="let item of list$ | async"
+      [ngTemplateOutlet]="listItemTemplate"
+      [ngTemplateOutletContext]="{
+        key: item.key,
+        label: item.label,
+        isUserTemplate: !item.isExample
+      }"
+    ></ng-container>
+
+    <div class="mt-3 px-4">
+      <ng-container
+        *ngTemplateOutlet="templateNameInputTemplate"
+      ></ng-container>
+    </div>
+  </div>
+</ng-container>
+
+<!-- mobile -->
+<ng-container *ngIf="isMobile">
+  <div
+    [ngClass]="[
+      showTemplateNameInput ? 'hidden' : 'flex',
+      'gap-3 items-center'
+    ]"
+  >
+    <ng-container *ngIf="currentTemplate$ | async as currentTemplate">
+      <button
+        type="button"
+        class="p-2"
+        (click)="
+          currentTemplate.isExample
+            ? reset(currentTemplate.key || '')
+            : remove(currentTemplate.key || '')
+        "
+      >
+        <i
+          class="bi"
+          [ngClass]="{
+            'bi-arrow-repeat': currentTemplate.isExample,
+            'bi-trash': !currentTemplate.isExample
+          }"
+        ></i>
+      </button>
+    </ng-container>
+
+    <select
+      class="flex-1 min-w-0 doc-form-element"
+      [ngModel]="currentTemplateKey$.value"
+      (ngModelChange)="select($event)"
+    >
+      <ng-container *ngFor="let item of list$ | async">
+        <option [ngValue]="item.key">{{ item.label }}</option>
+      </ng-container>
+    </select>
+
+    <!-- Add new template -->
+    <button
+      type="button"
+      class="p-2 text-xl"
+      (click)="toggleTemplateNameInput(true)"
+    >
+      <i class="bi bi-plus-lg"></i>
+    </button>
+
+    <!-- Save template -->
+    <ng-container *ngIf="currentTemplate$ | async as currentTemplate">
+      <button
+        type="button"
+        class="p-2 text-xl"
+        (click)="save(currentTemplate.key || '', !currentTemplate.isExample)"
+      >
+        <i class="bi bi-floppy"></i>
+      </button>
+    </ng-container>
+  </div>
+
+  <div [ngClass]="[showTemplateNameInput ? 'flex' : 'hidden', 'gap-2']">
+    <ng-container
+      *ngIf="showTemplateNameInput"
+      [ngTemplateOutlet]="templateNameInputTemplate"
+    ></ng-container>
+
+    <!-- Cancel add template -->
+    <button
+      type="button"
+      class="p-2 text-xl"
+      [ngClass]="{ hidden: nameControl.value }"
+      (click)="toggleTemplateNameInput(false)"
+    >
+      <i class="bi bi-x-lg"></i>
+    </button>
+  </div>
+</ng-container>
+
+<ng-template #templateNameInputTemplate>
+  <div class="flex-1 flex gap-2">
+    <input
+      type="text"
+      class="doc-form-element"
+      [formControl]="nameControl"
+      [ngClass]="[
+        'p-2 border border-[var(--border-color-50)] md:border-[var(--border-color-25)]',
+        'hover:border-[var(--border-color-50)] focus:border-[var(--border-color-50)]'
+      ]"
+      [placeholder]="i18nContent$.value.PLAYGROUND.TEMPLATE.NEW + '...'"
+      (keydown.enter)="newTemplate()"
+    />
+
+    <div
+      class="shrink-0 flex items-center gap-2"
+      [ngClass]="{
+        hidden: !nameControl.value
+      }"
+    >
+      <button type="button" class="p-2 text-lg" (click)="cancelNewTemplate()">
+        <i class="bi bi-x-lg"></i>
+      </button>
+
+      <button type="button" class="p-2 text-lg" (click)="newTemplate()">
+        <i class="bi bi-check2 text-lg"></i>
+      </button>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template
+  #listItemTemplate
+  let-isUserTemplate="isUserTemplate"
+  let-key="key"
+  let-label="label"
+>
+  <button
+    type="button"
+    [ngClass]="[
+      'relative z-0 flex items-start btn-template-name',
+      'px-4 py-1 text-start',
+      'duration-200',
+      currentTemplateKey$.value === key ? 'active' : ''
+    ]"
+    (click)="select(key)"
+  >
+    <span>{{ label }}</span>
+
+    <div
+      [ngClass]="[
+        'absolute top-1/2 right-0 z-10 -translate-y-1/2',
+        'flex items-center gap-2 h-[90%]',
+        'bg-[rgba(var(--body-bg-color-rgb),0.65)]',
+        'pointer-events-none',
+        'template-edit'
+      ]"
+    >
+      <ng-container *ngIf="isEditing">
+        <ng-container *ngIf="!isUserTemplate">
+          <button type="button" class="text-lg" (click)="reset(key)">
+            <i class="bi bi-arrow-repeat rotate-45"></i>
+          </button>
+        </ng-container>
+
+        <ng-container *ngIf="isUserTemplate">
+          <button type="button" class="text-lg" (click)="remove(key)">
+            <i class="bi bi-trash"></i>
+          </button>
+        </ng-container>
+
+        <button
+          type="button"
+          class="text-lg"
+          (click)="save(key, isUserTemplate === true)"
+        >
+          <i class="bi bi-check2 text-lg"></i>
+        </button>
+
+        <button type="button" class="text-lg" (click)="setEditStatus(false)">
+          <i class="bi bi-x-lg"></i>
+        </button>
+      </ng-container>
+
+      <ng-container *ngIf="!isEditing">
+        <button type="button" class="text-lg" (click)="setEditStatus(true)">
+          <i class="bi bi-pencil-square"></i>
+        </button>
+      </ng-container>
+    </div>
+  </button>
+</ng-template>

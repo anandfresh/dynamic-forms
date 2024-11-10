@@ -1,0 +1,25 @@
+<ng-container *ngIf="data">
+  <mat-form-field>
+    <mat-label>{{ data.label }}</mat-label>
+
+    <input
+      matInput
+      type="text"
+      imaskValuePatch
+      [formControl]="control"
+      [imask]="data.inputMask"
+      [propsBinding]="[
+        {
+          key: 'mat-input',
+          props: data.props,
+          omit: ['type']
+        },
+        {
+          key: 'imask',
+          props: data.props,
+        }
+      ]"
+      (complete)="onChange(control.value)"
+    />
+  </mat-form-field>
+</ng-container>

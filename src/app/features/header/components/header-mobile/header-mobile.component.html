@@ -1,0 +1,39 @@
+<div class="flex gap-4 items-center">
+  <a [routerLink]="'/'" class="flex gap-2 shrink-0 h-6">
+    <img src="assets/logo.svg" alt="" />
+    <version-selector></version-selector>
+  </a>
+
+  <header-tab-bar [links]="links"></header-tab-bar>
+
+  <button
+    type="button"
+    class="ml-auto btn-menu"
+    [ngClass]="{ active: openSettings }"
+    (click)="toggleSettings()"
+  >
+    <span></span>
+  </button>
+</div>
+
+<div
+  [ngClass]="[
+    'grid',
+    'duration-200',
+    openSettings ? 'grid-rows-[1fr]' : 'grid-rows-[0fr]'
+  ]"
+>
+  <div class="overflow-hidden">
+    <div
+      [ngClass]="[
+        'relative z-0',
+        'grid grid-cols-[1fr,auto] items-center gap-5',
+        'py-4 pb-2',
+        'duration-300 delay-100',
+        openSettings ? 'opacity-100' : 'opacity-0'
+      ]"
+    >
+      <app-theme-switcher></app-theme-switcher>
+    </div>
+  </div>
+</div>

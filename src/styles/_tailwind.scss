@@ -1,0 +1,26 @@
+@layer tailwind-base {
+  @tailwind base;
+}
+
+@layer tailwind-utilities {
+  @tailwind commponents;
+  @tailwind utilities;
+}
+
+@layer base {
+  h1 {
+    @apply text-3xl lg:text-4xl lg:my-6 font-bold;
+  }
+
+  h2 {
+    @apply text-2xl lg:text-3xl lg:my-4 font-bold;
+  }
+
+  h3 {
+    @apply text-xl lg:text-2xl lg:my-2 font-medium;
+  }
+
+  h4 {
+    @apply lg:text-lg font-medium;
+  }
+}

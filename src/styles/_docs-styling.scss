@@ -1,0 +1,134 @@
+.example-wrapper {
+  display: grid;
+  grid-template-columns: 2fr 3fr;
+  gap: 1rem;
+  margin-bottom: 3.5rem;
+  color: rgb(var(--text-color-rgb));
+}
+
+/* From https://css.glass */
+.glassmorphism-effect {
+  background: rgb(255, 204, 133);
+  background: linear-gradient(
+    333deg,
+    rgb(177 248 248 / 60%) 0%,
+    rgb(252 209 255 / 60%) 100%
+  );
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(7.8px);
+  -webkit-backdrop-filter: blur(7.8px);
+}
+
+.css-grid-example {
+  .form-group {
+    display: grid;
+    row-gap: 1.5rem;
+    column-gap: 0.85rem;
+    grid-auto-rows: max-content;
+    padding: 1rem;
+    margin: 0.5rem;
+    border-radius: 0.5rem;
+
+    @extend .glassmorphism-effect;
+  }
+
+  .form-control {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0.75rem 1rem;
+    border-radius: 0.5rem;
+    background: rgba(255, 255, 255, 0.5);
+    border: 2px solid white;
+
+    @extend .glassmorphism-effect;
+  }
+}
+
+@mixin layoutSection($color) {
+  position: relative;
+  border: solid 1px $color;
+  border-radius: 0.25rem;
+  padding: 0.35rem 0.85rem;
+  margin: 1rem 0;
+  background-color: color-mix(in srgb, $color 5%, var(--body-bg-color));
+  color: $color;
+  z-index: 0;
+}
+
+.docs-control-layout {
+  @include layoutSection(rgb(112, 57, 154));
+
+  .description,
+  .input-area {
+    @include layoutSection(#2d2d2d);
+  }
+
+  .label {
+    @include layoutSection(#4d9471);
+  }
+
+  .content {
+    @include layoutSection(rgb(24, 108, 244));
+  }
+
+  input {
+    border: solid 1px var(--border-color-50);
+    margin: 1rem 0;
+  }
+
+  .errors {
+    @include layoutSection(rgb(255, 42, 0));
+  }
+}
+
+@mixin darkStyle {
+  .glassmorphism-effect {
+    background: linear-gradient(
+      310deg,
+      rgba(255, 67, 111, 0.15),
+      rgba(95, 67, 255, 0.22)
+    );
+  }
+
+  .css-grid-example {
+    .form-control {
+      background: rgba(255, 255, 255, 0.1);
+    }
+  }
+
+  .docs-control-layout {
+    @include layoutSection(rgb(166, 111, 207));
+
+    .description,
+    .input-area {
+      @include layoutSection(#959595);
+    }
+
+    .label {
+      @include layoutSection(#29935e);
+    }
+
+    .content {
+      @include layoutSection(rgb(24, 108, 244));
+    }
+
+    .errors {
+      @include layoutSection(rgb(196, 33, 0));
+    }
+  }
+}
+
+html.dark {
+  @include darkStyle();
+}
+
+@media (prefers-color-scheme: dark) {
+  @include darkStyle();
+}
+
+@media screen and (max-width: 992px) {
+  .example-wrapper {
+    grid-template-columns: 1fr;
+  }
+}
