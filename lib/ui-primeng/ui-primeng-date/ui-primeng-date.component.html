@@ -1,0 +1,12 @@
+<ng-container *ngIf="data">
+  <p-calendar
+    [formControl]="control"
+    [propsBinding]="[
+      {
+        key: 'p-calendar',
+        props: data.props,
+      }
+    ]"
+    (onClose)="updateControl()"
+  ></p-calendar>
+</ng-container>

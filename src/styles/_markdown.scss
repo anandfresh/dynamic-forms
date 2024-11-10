@@ -1,0 +1,179 @@
+.markdown {
+  > *:first-child {
+    margin-top: 0 !important;
+  }
+
+  h1,
+  h2,
+  h3 {
+    margin-top: 3rem;
+
+    + :is(h1, h2, h3, h4, h5, h6) {
+      margin-top: 1rem;
+    }
+  }
+
+  h4,
+  h5,
+  h6 {
+    margin-top: 1.65rem;
+
+    + :is(h1, h2, h3, h4, h5, h6) {
+      margin-top: 1rem;
+    }
+  }
+
+  a {
+    position: relative;
+    color: var(--primary-500);
+    text-align: center;
+    z-index: 0;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
+  :is(p, ul) + :is(p, ul) {
+    @apply my-4;
+  }
+
+  hr {
+    margin: 2.5rem 0;
+    border-color: var(--border-color-25);
+  }
+
+  ol {
+    list-style: decimal;
+    margin-block-start: 0.5rem;
+    padding-inline-start: 1.5rem;
+  }
+
+  ul {
+    @apply list-disc pl-5;
+  }
+
+  li + li {
+    @apply my-1;
+  }
+
+  :is(doc-tab, doc-code, blockquote) pre {
+    @apply my-0;
+  }
+
+  doc-tab pre {
+    @apply rounded-none;
+  }
+
+  pre {
+    @apply max-h-full my-2 rounded-md overflow-hidden;
+  }
+
+  code {
+    font-size: 0.925rem;
+
+    &:not([class*="lang"]) {
+      display: inline-block;
+      padding: 0.1em 0.5em;
+      margin: 0.1rem;
+      font-size: 0.925em;
+      background-color: rgba(128, 128, 128, 0.1);
+      border-radius: 3px;
+    }
+  }
+
+  blockquote {
+    padding: 0.5rem;
+    padding-left: 1rem;
+    margin-block: 1rem;
+    margin-inline: 0;
+    border-left: solid 5px
+      color-mix(in srgb, var(--primary-400) 75%, rgb(128, 128, 128));
+    border-radius: 0.2rem;
+    background-color: color-mix(
+      in srgb,
+      var(--primary-200) 20%,
+      rgba(255, 255, 255, 0.05)
+    );
+
+    p {
+      margin-block: 0.25rem;
+    }
+  }
+
+  table {
+    border-collapse: collapse;
+    width: 100%;
+    padding: 1rem;
+
+    th {
+      padding: 0.5rem;
+      border-block: solid 1px rgba(128, 128, 128, 0.5);
+      color: rgba(128, 128, 128, 1);
+      font-weight: normal;
+      text-transform: uppercase;
+      text-align: start;
+    }
+
+    td {
+      padding: 0.5rem;
+      border-bottom: solid 1px rgba(128, 128, 128, 0.15);
+    }
+
+    tr:nth-child(even) {
+      background-color: rgba(128, 128, 128, 0.065);
+    }
+  }
+
+  .table-wrapper {
+    width: 100%;
+    overflow-x: auto;
+    overflow-y: hidden;
+    margin: 1rem 0;
+  }
+
+  .code-wrapper {
+    position: relative;
+    z-index: 0;
+
+    pre {
+      padding-right: 5rem;
+    }
+
+    .code-tag {
+      position: absolute;
+      top: 0.5rem;
+      right: 0;
+      color: rgb(128, 128, 128);
+      padding: 0.25rem 0.75rem;
+      border-radius: 0.2rem;
+      font-size: 0.75rem;
+      backdrop-filter: blur(4px);
+      z-index: 1;
+    }
+  }
+}
+
+@media screen and (max-width: 1024px) {
+  .markdown {
+    h1,
+    h2,
+    h3 {
+      margin-top: 1.75rem;
+
+      + :is(h1, h2, h3, h4, h5, h6) {
+        margin-top: 0.5rem;
+      }
+    }
+
+    h4,
+    h5,
+    h6 {
+      margin-top: 0.75rem;
+
+      + :is(h1, h2, h3, h4, h5, h6) {
+        margin-top: 0.5rem;
+      }
+    }
+  }
+}

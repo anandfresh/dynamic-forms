@@ -1,0 +1,40 @@
+.btn-template-name {
+  border-block: solid 1px;
+  border-color: transparent;
+  transition-property: padding, border-color;
+
+  &:hover,
+  &:active {
+    border-color: var(--border-color-50);
+    color: var(--primary-500);
+  }
+
+  &.active {
+    border-color: var(--border-color-50);
+    font-weight: bold;
+    padding: 1rem 0.5rem;
+    color: var(--primary-500);
+
+    .template-edit {
+      opacity: 1;
+      pointer-events: auto;
+    }
+  }
+
+  .template-edit {
+    backdrop-filter: blur(4px);
+    opacity: 0;
+
+    button {
+      border-radius: 0.5rem;
+      color: rgb(var(--text-color-rgb));
+      padding: 0.5rem;
+
+      &:hover {
+        background-color: var(--primary-500);
+        color: white;
+        box-shadow: 0 0 1rem rgba(0, 0, 0, 0.2);
+      }
+    }
+  }
+}

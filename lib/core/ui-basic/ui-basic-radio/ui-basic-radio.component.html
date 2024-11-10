@@ -1,0 +1,47 @@
+<ng-container *ngIf="data">
+  <div
+    class="group-buttons"
+    [style]="data.options?.containerStyles"
+    [ngClass]="[
+      data.options?.containerClass ?? '',
+      isDisabled ? 'disabled' : ''
+    ]"
+    [ngStyle]="{
+      'flex-direction': data.options?.layout,
+    }"
+  >
+    <ng-container *ngFor="let item of data.options?.data; index as i">
+      <div class="option-button-wrapper">
+        <label
+          class="option-button"
+          [ngStyle]="{
+            'justify-content':
+              data.options?.labelPosition === 'before' ? 'space-between' : null
+          }"
+        >
+          <span *ngIf="data.options?.labelPosition === 'before'">{{
+            item.label
+          }}</span>
+
+          <input
+            type="radio"
+            [name]="data.formControlName"
+            [propsBinding]="[
+              {
+                props: data.props,
+                omit: ['type', 'name']
+              }
+            ]"
+            [checked]="selectedIndex === i"
+            (change)="onChange(i)"
+          />
+          <span class="marker"></span>
+
+          <span *ngIf="data.options?.labelPosition !== 'before'">{{
+            item.label
+          }}</span>
+        </label>
+      </div>
+    </ng-container>
+  </div>
+</ng-container>

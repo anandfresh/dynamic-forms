@@ -1,0 +1,25 @@
+.header {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+
+  .content-wrapper {
+    flex-direction: row;
+  }
+
+  .logo {
+    display: block;
+    width: 3rem;
+    padding: 0.5rem;
+
+    &::after {
+      content: none;
+    }
+  }
+
+  .settings {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+}
